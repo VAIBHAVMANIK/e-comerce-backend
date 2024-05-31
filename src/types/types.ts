@@ -8,14 +8,41 @@ export interface NewUserRequestBody {
   _id: string;
   dob: Date;
 }
-export interface UserId{
-    id:string;
+export interface NewProductRequestBody {
+  name: string;
+  category: string;
+  price: number;
+  stock: string;
 }
 
 export interface ControllerType {
-  (
-    req: Request<UserId, {}, NewUserRequestBody>,
-    res: Response,
-    next: NextFunction
-  ): Promise<void | Response<any, Record<string, any>>>;
+  (req: Request, res: Response, next: NextFunction): Promise<void | Response<
+    any,
+    Record<string, any>
+  >>;
 }
+
+export type SearchRequestQuery = {
+  search?: string;
+  category?: string;
+  price?: string;
+  sort?: string;
+  page?: string;
+};
+
+export interface BaseQuery {
+  name?: {
+    $regex: string;
+    $options: string;
+  };
+  category?: string;
+  price?: {
+    $lte: number;
+  };
+}
+
+export type cacheRevalidationProps = {
+  products?: boolean;
+  order?: boolean;
+  admins?: boolean;
+};

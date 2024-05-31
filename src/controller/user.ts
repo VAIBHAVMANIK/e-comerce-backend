@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
+import { TryCatch } from "../middleware/tryCatch";
 import { User } from "../models/user";
 import { NewUserRequestBody } from "../types/types";
 import ErrorHandler from "../utils/errorHandler";
-import { TryCatch } from "../middleware/tryCatch";
 
 export const newUser = TryCatch(
   async (

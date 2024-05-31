@@ -1,20 +1,15 @@
 import mongoose from "mongoose";
 
 interface IProduct extends Document {
-  id: string;
   name: string;
   photo: string;
   category: string;
-  stock:number;
-  price:number;
+  stock: number;
+  price: number;
 }
 
 const schema = new mongoose.Schema(
   {
-    _id: {
-      type: String,
-      required: [true, "Please enter Id"],
-    },
     name: {
       type: String,
       required: [true, "Please enter name"],
@@ -40,6 +35,5 @@ const schema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
 
 export const Product = mongoose.model<IProduct>("Product", schema);
