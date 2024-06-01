@@ -7,13 +7,15 @@ export const errorMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-    err.message||= "Internal error";
-    err.statusCode||= 500;
+  err.message ||= "Internal error";
+  err.statusCode ||= 500;
 
-    return res.status(err.statusCode).json(
-        {
-            success:false,
-            error:err.message,
-        }
-    );
+  if (err.name === "CastError") {
+    (err.message = "Invalid Id"), (err.statusCode = 400);
+  }
+
+  return res.status(err.statusCode).json({
+    success: false,
+    error: err.message,
+  });
 };

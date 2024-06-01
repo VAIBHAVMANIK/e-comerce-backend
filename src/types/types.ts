@@ -15,6 +15,33 @@ export interface NewProductRequestBody {
   stock: string;
 }
 
+export interface ShippingAddress {
+  address: string;
+  city: string;
+  state: string;
+  pinpcode: number;
+  country: string;
+}
+
+export interface OrderItemType {
+  name: string;
+  productId: string;
+  quantity: number;
+  price: number;
+  photo: string;
+}
+
+export interface NewOrderRequestBody {
+  shippingAddress: ShippingAddress;
+  orderItems: OrderItemType[];
+  subtotal: number;
+  total: number;
+  tax: number;
+  shippingCharges: number;
+  discount: number;
+  userInfo: string;
+}
+
 export interface ControllerType {
   (req: Request, res: Response, next: NextFunction): Promise<void | Response<
     any,
@@ -45,4 +72,5 @@ export type cacheRevalidationProps = {
   products?: boolean;
   order?: boolean;
   admins?: boolean;
+  userId?: string;
 };
