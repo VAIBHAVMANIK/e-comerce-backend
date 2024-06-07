@@ -1,6 +1,4 @@
 import { myCache } from "../app";
-import { Order } from "../models/order";
-import { Product } from "../models/products";
 import { cacheRevalidationProps } from "../types/types";
 
 const cacheRevalidation = async ({
@@ -8,6 +6,8 @@ const cacheRevalidation = async ({
   order,
   admins,
   userId,
+  productId,
+  orderId,
 }: cacheRevalidationProps) => {
   if (products) {
     const productsKey: string[] = [
@@ -15,19 +15,21 @@ const cacheRevalidation = async ({
       "categories",
       "latest-product",
     ];
-    const products = await Product.find({}).select("_id");
-    products.forEach((id) => {
-      productsKey.push(`product=${id}`);
-    });
+    if (typeof productId === "string") {
+      productsKey.push(`product-${productId}`);
+    }
+    if (typeof productId === "object") {
+      productId.forEach((i) => productsKey.push(`product-Ō${i}`));
+    }
 
     myCache.del(productsKey);
   }
   if (order) {
-    const orderKey: string[] = ["all-orders", `myOrder-${userId}`];
-    const order = await Order.find({}).select("_id");
-    order.forEach((i) => {
-      orderKey.push(`order=${i._id}`);
-    });
+    const orderKey: string[] = [
+      "all-orders",
+      `myOrder-${userId}`,
+      `order=${orderId}`,
+    ];
 
     myCache.del(orderKey);
   }

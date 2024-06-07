@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-
+import { IProduct, Product } from "../models/products";
 export interface NewUserRequestBody {
   name: string;
   email: string;
@@ -73,4 +73,14 @@ export type cacheRevalidationProps = {
   order?: boolean;
   admins?: boolean;
   userId?: string;
+  orderId?: string;
+  productId?: string | string[];
 };
+
+
+export type NewCouponRequestBody={
+  code: string;
+  amount: number;
+}
+
+

@@ -42,7 +42,13 @@ export const newOrder = TryCatch(
       userInfo,
     });
     await reduceStock(orderItems);
-    await cacheRevalidation({ products: true, order: true, admins: true,userId:userInfo });
+    await cacheRevalidation({
+      products: true,
+      order: true,
+      admins: true,
+      userId: userInfo,
+      productId: orderItems.map((i) => i.productId),
+    });
 
     res.status(201).json({
       success: true,
@@ -113,7 +119,13 @@ export const processOrder = TryCatch(async (req, res, next) => {
       order.status = "Delivered";
       break;
   }
-  await cacheRevalidation({ products: false, order: true, admins: true,userId:order.userInfo });
+  await cacheRevalidation({
+    products: false,
+    order: true,
+    admins: true,
+    userId: order.userInfo,
+    orderId: String(order._id),
+  });
   await order.save();
   return res.status(200).json({
     success: true,
@@ -125,9 +137,14 @@ export const deleteOrder = TryCatch(async (req, res, next) => {
   const id = req.params.id;
   const order = await Order.findById(id);
   if (!order) return next(new ErrorHandler("No Order found", 404));
-
   await order.deleteOne();
-  await cacheRevalidation({ products: false, order: true, admins: true,userId:order.userInfo });
+  await cacheRevalidation({
+    products: false,
+    order: true,
+    admins: true,
+    userId: order.userInfo,
+    orderId: String(order._id),
+  });
   return res.status(200).json({
     success: true,
     message: `Order deleted successfully`,

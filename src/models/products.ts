@@ -1,17 +1,19 @@
 import mongoose from "mongoose";
 
-interface IProduct extends Document {
+export interface IProduct extends Document {
   name: string;
   photo: string;
   category: string;
   stock: number;
   price: number;
 }
+const today = new Date().toString();
 
 const schema = new mongoose.Schema(
   {
     name: {
       type: String,
+      unique: [true, "name already exists"],
       required: [true, "Please enter name"],
     },
     photo: {
@@ -32,7 +34,7 @@ const schema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 

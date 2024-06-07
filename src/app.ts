@@ -4,8 +4,11 @@ import { errorMiddleware } from "./middleware/error";
 import userRoute from "./routes/user";
 import productRoute from "./routes/product";
 import orderRoute from "./routes/order";
+import paymentRoute from "./routes/payment";
+import adminRoute from "./routes/adminStatatics"
 import NodeCache from "node-cache";
 import morgan from "morgan";
+
 
 const app = express();
 const port = process.env.PORT || "";
@@ -25,6 +28,9 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/product", productRoute);
 //Order routes
 app.use("/api/v1/order", orderRoute);
+//Payment routes
+app.use("/api/v1/payment", paymentRoute);
+app.use("/api/v1/admin", adminRoute);
 
 //error Handler
 app.use(errorMiddleware);
