@@ -6,8 +6,9 @@ export interface IProduct extends Document {
   category: string;
   stock: number;
   price: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
-const today = new Date().toString();
 
 const schema = new mongoose.Schema(
   {
@@ -34,7 +35,7 @@ const schema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

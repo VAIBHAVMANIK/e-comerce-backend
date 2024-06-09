@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { IProduct, Product } from "../models/products";
+import mongoose, { Document } from "mongoose";
+// import { IProduct, Product } from "../models/products";
 export interface NewUserRequestBody {
   name: string;
   email: string;
@@ -77,10 +78,14 @@ export type cacheRevalidationProps = {
   productId?: string | string[];
 };
 
-
-export type NewCouponRequestBody={
+export type NewCouponRequestBody = {
   code: string;
   amount: number;
+};
+
+export interface MyDocument extends Document {
+  createdAt: Date;
+  property?: string;
+  total?: number;
+  discount?: number;
 }
-
-

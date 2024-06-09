@@ -3,6 +3,7 @@ import { TryCatch } from "../middleware/tryCatch";
 import { User } from "../models/user";
 import { NewUserRequestBody } from "../types/types";
 import ErrorHandler from "../utils/errorHandler";
+import cacheRevalidation from "../utils/cacheRevalidation";
 
 export const newUser = TryCatch(
   async (
@@ -33,6 +34,7 @@ export const newUser = TryCatch(
       name,
       photo,
     });
+    cacheRevalidation({ admins: true });
 
     return res.status(200).json({
       success: true,
@@ -71,6 +73,7 @@ export const deleteUser = TryCatch(async (req, res, next) => {
   }
 
   await user.deleteOne();
+  cacheRevalidation({ admins: true });
 
   return res.status(202).json({
     success: true,

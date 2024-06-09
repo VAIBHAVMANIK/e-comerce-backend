@@ -34,6 +34,8 @@ const cacheRevalidation = async ({
     myCache.del(orderKey);
   }
   if (admins) {
+    const adminkeys = ["admin-dashboard","admin-product-chart","admin-barchart","admin-linechart"]
+    myCache.del(adminkeys)
   }
 };
 

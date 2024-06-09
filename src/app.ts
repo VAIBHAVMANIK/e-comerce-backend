@@ -5,13 +5,12 @@ import userRoute from "./routes/user";
 import productRoute from "./routes/product";
 import orderRoute from "./routes/order";
 import paymentRoute from "./routes/payment";
-import adminRoute from "./routes/adminStatatics"
+import adminRoute from "./routes/adminStatatics";
 import NodeCache from "node-cache";
 import morgan from "morgan";
 
-
 const app = express();
-const port = process.env.PORT || "";
+const port = process.env.PORT || 4000;
 export const myCache = new NodeCache();
 connectDB(process.env.MONGODB_URI || "");
 app.use(express.json());
